@@ -40,15 +40,15 @@
                 :theta ~theta
                 :f (rulefn ~@rules)}))
 
-(defn generation
-  "Shorthand for getting the nth generation of a rule."
-  [n rule]
-  (last (generations n)))
-
 (defn generations
   "Shorthand for getting a seq of the first n generations of a rule."
   [n rule]
   (map vec (take n (iterate (:f rule) (:initial-state rule)))))
+
+(defn generation
+  "Shorthand for getting the nth generation of a rule."
+  [n rule]
+  (last (generations n)))
 
 ;; ----------------------------------------------------------------------------
 
