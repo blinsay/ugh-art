@@ -45,9 +45,10 @@
   (if (vector? item)
     (branch state item)
     (case item
-      :f (move state item)
-      :F (move-to state item)
-      (:+ :-) (rotate state item))))
+      :f      (move    state item)
+      :F      (move-to state item)
+      (:+ :-) (rotate  state item)
+      state)))
 
 (defn process
   ([symbols d theta]
