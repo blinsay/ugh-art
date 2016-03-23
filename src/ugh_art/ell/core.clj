@@ -2,6 +2,34 @@
   "Core functions for L-systems."
   (:require [quil.core :as q]))
 
+;; Generate an L-system
+
+(defmacro rulefn
+  [& rules]
+  `(fn [x#]
+     (condp = x# ~@rules [x#])))
+
+(defn nested-mapcat
+  [xs f already-mapped]
+  (if (seq xs)
+    (let [x      (first xs)
+          result (if (vector? x)
+                   (concat already-mapped [(nested-mapcat x f [])])
+                   (concat already-mapped (f x)))]
+      (nested-mapcat (rest xs) f result))
+    (vec already-mapped)))
+
+(defn node-rewriter
+  [rulefn]
+  (fn [system]
+    (nested-mapcat system rulefn [])))
+
+(defn node-rewrite
+  [system rulefn]
+  ((node-rewriter rulefn) system))
+
+;; Convert an L-System to points
+
 (declare system->points)
 
 (defn branch
@@ -47,8 +75,8 @@
   (if (vector? item)
     (branch state item)
     (case item
-      :f      (move    state item)
-      :F      (move-to state item)
+      :F      (move    state item)
+      :f      (move-to state item)
       (:+ :-) (rotate  state item)
       state)))
 
