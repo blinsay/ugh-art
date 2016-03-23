@@ -2,12 +2,14 @@
   "Core functions for L-systems."
   (:require [quil.core :as q]))
 
+(declare system->points)
+
 (defn branch
   [state branch-seq]
-  (let [branch-points (process branch-seq
-                               (assoc state
-                                      :segments []
-                                      :current-segment [(select-keys state [:x :y])]))]
+  (let [branch-points (system->points branch-seq
+                                      (assoc state
+                                             :segments []
+                                             :current-segment [(select-keys state [:x :y])]))]
     (assoc state
            :segments (concat (:segments state)
                              branch-points))))
@@ -50,16 +52,16 @@
       (:+ :-) (rotate  state item)
       state)))
 
-(defn process
+(defn system->points
   ([symbols d theta]
-   (process symbols {:x 0 :y 0} 0 d theta))
+   (system->points symbols {:x 0 :y 0} 0 d theta))
   ([symbols position heading d theta]
-   (process symbols (merge position
-                           {:d d
-                            :theta theta
-                            :heading heading
-                            :segments []
-                            :current-segment [position]})))
+   (system->points symbols (merge position
+                                  {:d d
+                                   :theta theta
+                                   :heading heading
+                                   :segments []
+                                   :current-segment [position]})))
   ([symbols state]
    (let [final-state (reduce process-item state symbols)]
      (conj (:segments final-state) (:current-segment final-state)))))
