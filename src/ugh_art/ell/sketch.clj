@@ -3,15 +3,14 @@
             [quil.middleware]
             [ugh-art.ell.core :as ell]))
 
-(def plant
-  (let [generator (ell/node-rewriter
-                   (ell/rulefn
-                    :F [:F :F :- [:- :F :+ :F :+ :F] :+ [:+ :F :- :F :- :F]]))
-        generations (iterate generator [:F])]
-    (nth generations 6)))
+(def p1
+  (ell/rulefn
+   :F [:F [:+ :F] :F [:- :F] [:F]]))
+
+(def plant (ell/generation p1 [:F] 6))
 
 (def points
-  (ell/system->points plant 4 (q/radians 22.25)))
+  (ell/tree->points plant 4 (q/radians 22.25)))
 
 (defn draw-points
   [points]
