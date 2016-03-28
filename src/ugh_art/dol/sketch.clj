@@ -1,4 +1,4 @@
-(ns ugh-art.sketch.dol
+(ns ugh-art.dol.sketch
   (:require [quil.core :as q]
             [quil.middleware]
             [ugh-art.dol.rules :as rules]

@@ -59,8 +59,8 @@
 (defn draw [] (dots))
 
 (defn run []
-  (q/defsketch trig-fuckery
-    :name "repl-trig"
+  (q/defsketch gary
+    :name "gary"
     :size [800 800]
     :settings #(q/smooth 2)
     :setup (fn []

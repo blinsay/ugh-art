@@ -1,4 +1,4 @@
-(ns ugh-art.sketch.ell
+(ns ugh-art.ell.sketch
   (:require [quil.core :as q]
             [quil.middleware]
             [ugh-art.ell.core :as ell]))
