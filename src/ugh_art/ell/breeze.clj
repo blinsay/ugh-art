@@ -1,4 +1,4 @@
-(ns ugh-art.ell.sketch
+(ns ugh-art.ell.breeze
   (:require [quil.core :as q]
             [quil.middleware]
             [ugh-art.ell.core :as ell]))
@@ -7,15 +7,7 @@
   (ell/rulefn
    :F [:F [:+ :F] :F [:- :F] [:F]]))
 
-(def p2
-  (ell/rulefn
-   :X [:F [:+ :X] :F [:- :X] :+ :X]
-   :F [:F :F]))
-
 (def plant (ell/generation p1 [:F] 3))
-
-(def points
-  (ell/tree->points plant 5 (q/radians 22.25)))
 
 (def breeze
   (let [starting-angles (range 20 25 0.25)
@@ -46,7 +38,7 @@
 (defn start
   []
   (q/defsketch sketch
-    :name "repl-l-system-too"
+    :name "breeze"
     :size [800 800]
     :setup (fn []
              (q/smooth)
