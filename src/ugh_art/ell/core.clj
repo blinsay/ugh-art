@@ -28,6 +28,17 @@
        (tree-mapcat (rest xs) f result))
      (vec already-mapped))))
 
+(defn max-segment-length
+  [xs]
+  (if (seq xs)
+    (let [x    (first xs)
+          rlen (max-segment-length (rest xs))
+          delta (if (= x :F) 1 0)]
+      (if (vector? x)
+        (max (max-segment-length x) rlen)
+        (+ delta rlen)))
+    0))
+
 (defn take-segments
   ([xs n]
    (if (and (> n 0) (seq xs))
